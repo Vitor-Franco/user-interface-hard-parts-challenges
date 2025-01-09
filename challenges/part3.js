@@ -1,26 +1,26 @@
-let myName = '';
+let myName = "";
 let isFocus = false;
 
-let jsInput = document.querySelector('input');
-let jsDiv = document.querySelector('div');
-
-function dataToView() {
-  jsInput.value = myName;
-  jsDiv.textContent = myName;
-}
+let jsInput;
+let jsDiv;
 
 function handleInput() {
-  myName = jsInput.value;
+	myName = jsInput.value;
 }
 
-jsInput.oninput = handleInput;
+function component() {
+	document.activeElement === jsInput ? (isFocus = true) : (isFocus = false);
 
-// function component() {
-//   document.activeElement === jsInput ? (isFocus = true) : (isFocus = false);
+	jsInput = document.createElement("input");
+	jsInput.value = myName;
+	jsInput.oninput = handleInput;
+	
+  jsDiv = document.createElement("div");
+	jsDiv.textContent = myName;
 
-//   //your code here
+  document.body.replaceChildren(jsInput, jsDiv)
 
-//   if (isFocus) jsInput.focus();
-// }
+	if (isFocus) jsInput.focus();
+}
 
-setInterval(dataToView, 15);
+setInterval(component, 15);
