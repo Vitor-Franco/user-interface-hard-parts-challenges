@@ -20,7 +20,7 @@ function createVDOM() {
 			[
 				["div", "nested 1"],
 				["div", "nested 2"],
-				["div", `nested 3 - user: ${myName}`],
+				["div", `nested 3 - user: ${myName}`, , [["input", "other nested kk"]]],
 			],
 		],
 	];
@@ -33,17 +33,9 @@ function convert(node) {
 	el.value = content;
 	el.oninput = handler;
 
-	if (children && children.length > 0) {
-		for (const child of children) {
-			const [element, content, handler] = child;
-
-			const childEl = document.createElement(element);
-			childEl.textContent = content;
-			childEl.value = content;
-			childEl.oninput = handler;
-
-			el.appendChild(childEl);
-		}
+	if (Array.isArray(children)) {
+		const childElems = children.map(convert);
+		el.append(...childElems);
 	}
 
 	return el;
